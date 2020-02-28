@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right top, #f26565, #ff825a, #ffa151, #ffc150, #ffe25a);
+}
+
+.terminal {
+    height: 500px;
+    width: 700px;
+    border-radius: .5em;
+    overflow: hidden;
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+
+    &__toolbar {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .3em;
+        background-image: linear-gradient(to bottom, #ffffff, #f5f5f5, #eaeaea, #e0e0e0, #d6d6d6);
+        
+        &__buttons {
+            position: absolute;
+            display: flex;
+            left: .5em;
+
+            * {
+                height: 10px;
+                width: 10px;
+                border-radius: 10px;
+                margin: 0 2px;
+            }
+
+            &__close {
+                background-color: rgb(255, 94, 94);
+            }
+
+            &__resize {
+                background-color: rgb(255, 244, 94);
+            }
+
+            &__minimize {
+                background-color: rgb(121, 255, 94);
+            }
+        }
+    }
+
+    &__body {
+        flex: 1;
+        padding: .5em;
+        
+        * {
+            color: rgb(207, 207, 207);
+            font-size: 14px;
+        }
+
+        &--warning {
+            color: #f26565;
+        }
+
+        &__input {
+            display: flex;
+
+            &--highlight {
+                color: #ffe25a;
+            }
+
+            input {
+                border: 0;
+                background: none;
+                outline: none;
+                margin-left: .5em;
+                flex: 1;
+            }
+        }
+
+        &__output {
+            margin: .5em 0;
+        }
+    }
+}

@@ -11,7 +11,7 @@ const commands = [
             node.append(br.cloneNode(true))
             node.appendChild(document.createTextNode('HISTORY -------------> Shows command history'))
             node.append(br.cloneNode(true))
-            node.appendChild(document.createTextNode('CLEAR ----------------> Clears the terminal (actually refreshes the page)'))
+            node.appendChild(document.createTextNode('CLEAR ----------------> Clears the terminal'))
             node.append(br.cloneNode(true))
             node.appendChild(document.createTextNode('SUDO {command} --> Give it a try!'))
             

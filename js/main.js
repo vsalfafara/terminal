@@ -9,7 +9,7 @@ const commands = [
             node.append(br)
             node.appendChild(document.createTextNode('HELP ------------------> Shows available commands'))
             node.append(br.cloneNode(true))
-            node.appendChild(document.createTextNode('HISTORY -------------> Shows available commands'))
+            node.appendChild(document.createTextNode('HISTORY -------------> Shows command history'))
             node.append(br.cloneNode(true))
             node.appendChild(document.createTextNode('CLEAR ----------------> Clears the terminal (actually refreshes the page)'))
             node.append(br.cloneNode(true))
@@ -53,7 +53,7 @@ let output = document.querySelector('#body');
 let outputCopy = output.cloneNode(true)
 let count = 0;
 
-function listener(e) {
+function execute(e) {
     if (e.key === 'Enter' && e.target.value){
         let commandChain = e.target.value.split(' ');
         commandChain.map((commandText) => {
@@ -101,7 +101,7 @@ function moveToBottom(e) {
     
         copy.id = `input${++count}`
         copy.querySelector('input').value = ''
-        copy.querySelector('input').addEventListener('keypress', listener)
+        copy.querySelector('input').addEventListener('keypress', execute)
         copy.querySelector('input').addEventListener('keydown', getHistory)
         output.appendChild(copy)
         copy.querySelector('input').focus()
@@ -132,7 +132,7 @@ function moveToBottom(e) {
 
         output.appendChild(copy)
         input.focus()
-        input.addEventListener('keypress', listener)
+        input.addEventListener('keypress', execute)
         input.addEventListener('keydown', getHistory)
         count = 0
     }
@@ -140,7 +140,7 @@ function moveToBottom(e) {
 
 function init() {
     let input = document.querySelector('input')
-    input.addEventListener('keypress', listener)
+    input.addEventListener('keypress', execute)
     input.addEventListener('keydown', getHistory)
 }
 

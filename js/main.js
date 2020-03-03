@@ -9,33 +9,23 @@ const commands = [
             node.append(br)
             node.appendChild(document.createTextNode('HELP ------------------> Shows available commands'))
             node.append(br.cloneNode(true))
-            node.appendChild(document.createTextNode('PROJECT -------------> Shows projects'))
+            node.appendChild(document.createTextNode('HISTORY -------------> Shows available commands'))
             node.append(br.cloneNode(true))
-            node.appendChild(document.createTextNode('CONTACT ------------> Shows email address and contact number'))
+            node.appendChild(document.createTextNode('CLEAR ----------------> Clears the terminal (actually refreshes the page)'))
             node.append(br.cloneNode(true))
-            node.appendChild(document.createTextNode('SUDO {command} ---> Give it a try!'))
-            node.append(br.cloneNode(true))
-            node.appendChild(document.createTextNode('CLEAR -----------------> Clears the terminal (actually refreshes the page)'))
-            return node
+            node.appendChild(document.createTextNode('SUDO {command} --> Give it a try!'))
+            
+            output.appendChild(node)
         }
     },
     {
-        command: 'project',
+        command: 'history',
         output: () => {
-            let node = document.createElement('p')
-            node.appendChild(document.createTextNode('No projects yet. Stay tuned!'))
-            return node
-        }
-    },
-    {
-        command: 'contact',
-        output: () => {
-            let node = document.createElement('p')
-            let br = document.createElement('br')
-            node.appendChild(document.createTextNode('Email Address: alfafara.vm@gmail.com'))
-            node.appendChild(br)
-            node.appendChild(document.createTextNode('Contact Number: n/a'))
-            return node
+            history.map((command) => {
+                let node = document.createElement('p')
+                node.appendChild(document.createTextNode(command))
+                output.appendChild(node)
+            })
         }
     },
     {
@@ -49,7 +39,8 @@ const commands = [
             childNodeWarning.appendChild(document.createTextNode('HOL\'UP! '))
             node.appendChild(childNodeWarning)
             node.appendChild(document.createTextNode('You tryna execute a command with sudo!'))
-            return node
+            
+            output.appendChild(node)
         }
     }
 ]
@@ -71,7 +62,7 @@ function listener(e) {
             else {
                 let commandOutput = commands.find((command) => command.command == commandText.toLowerCase())
                 if (commandOutput) 
-                    output.appendChild(commandOutput.output())
+                    commandOutput.output()
                 else {
                     let node = document.createElement('p')
                     node.appendChild(document.createTextNode('Command not found. Try help'))
@@ -80,7 +71,10 @@ function listener(e) {
             }
         })
         moveToBottom(e)
+
         history.push(e.target.value)
+        if (history.length > 10)
+            history.shift()
         historyNavigation = history.length
     }
 }

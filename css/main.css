@@ -95,6 +95,7 @@ body {
       -ms-flex: 1;
           flex: 1;
   padding: .5em;
+  overflow: auto;
 }
 
 .terminal__body * {

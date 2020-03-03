@@ -67,6 +67,7 @@ body {
     &__body {
         flex: 1;
         padding: .5em;
+        overflow: auto;
         
         * {
             color: rgb(207, 207, 207);

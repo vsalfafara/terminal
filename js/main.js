@@ -4,7 +4,37 @@ const commands = [
         command: 'help',
         output: () => {
             let node = document.createElement('p')
-            node.appendChild(document.createTextNode('This is the Help output'))
+            let br = document.createElement('br')
+            node.appendChild(document.createTextNode('Here are the available commands:'))
+            node.append(br)
+            node.appendChild(document.createTextNode('HELP ------------------> Shows available commands'))
+            node.append(br.cloneNode(true))
+            node.appendChild(document.createTextNode('PROJECT -------------> Shows projects'))
+            node.append(br.cloneNode(true))
+            node.appendChild(document.createTextNode('CONTACT ------------> Shows email address and contact number'))
+            node.append(br.cloneNode(true))
+            node.appendChild(document.createTextNode('SUDO {command} ---> Give it a try!'))
+            node.append(br.cloneNode(true))
+            node.appendChild(document.createTextNode('CLEAR -----------------> Clears the terminal (actually refreshes the page)'))
+            return node
+        }
+    },
+    {
+        command: 'project',
+        output: () => {
+            let node = document.createElement('p')
+            node.appendChild(document.createTextNode('No projects yet. Stay tuned!'))
+            return node
+        }
+    },
+    {
+        command: 'contact',
+        output: () => {
+            let node = document.createElement('p')
+            let br = document.createElement('br')
+            node.appendChild(document.createTextNode('Email Address: alfafara.vm@gmail.com'))
+            node.appendChild(br)
+            node.appendChild(document.createTextNode('Contact Number: n/a'))
             return node
         }
     },
@@ -31,36 +61,23 @@ let count = 0;
 
 function listener(e) {
     if (e.key === 'Enter'){
-        // if (/\s/.test(e.target.value)) {
-        //     let 
-        // }
-
-        if (e.target.value == 'clear') {
-            window.location.reload(false)
-        }
-
-        if (e.target.value.includes('sudo')) {
-            let command = commands.find((command) => command.command == 'sudo')
-
-            output.appendChild(command.output())
-            moveToBottom(e)
-            return
-        }
-
-        let command = commands.find((command) => command.command == e.target.value)
-
-        if (command){
-            output.appendChild(command.output())
-            moveToBottom(e)
-            return
-        }
-        else {
-            let node = document.createElement('p')
-            node.appendChild(document.createTextNode('Command not found. Try help'))
-            output.appendChild(node)
-            moveToBottom(e)
-            return
-        }
+        let commandChain = e.target.value.split(' ');
+        commandChain.map((commandText) => {
+            if (commandText == 'clear') {
+                window.location.reload(false)
+                return
+            }
+            
+            let commandOutput = commands.find((command) => command.command == commandText.toLowerCase())
+            if (commandOutput) 
+                output.appendChild(commandOutput.output())
+            else {
+                let node = document.createElement('p')
+                node.appendChild(document.createTextNode('Command not found. Try help'))
+                output.appendChild(node)
+            }
+        })
+        moveToBottom(e)
     }
 }
 

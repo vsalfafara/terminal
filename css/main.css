@@ -18,8 +18,8 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-image: -webkit-gradient(linear, left bottom, right top, from(#f26565), color-stop(#ff825a), color-stop(#ffa151), color-stop(#ffc150), to(#ffe25a));
-  background-image: linear-gradient(to right top, #f26565, #ff825a, #ffa151, #ffc150, #ffe25a);
+  background-image: -webkit-gradient(linear, right top, left bottom, from(#42deff), color-stop(#00bdff), color-stop(#0099ff), color-stop(#006dff), to(#122eeb));
+  background-image: linear-gradient(to left bottom, #42deff, #00bdff, #0099ff, #006dff, #122eeb);
 }
 
 .terminal {
@@ -80,6 +80,14 @@ body {
 
 .terminal__toolbar__buttons__minimize {
   background-color: #79ff5e;
+}
+
+.terminal__toolbar__title {
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .terminal__body {

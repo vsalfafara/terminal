@@ -12,7 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(to right top, #f26565, #ff825a, #ffa151, #ffc150, #ffe25a);
+    background-image: linear-gradient(to left bottom, #42deff, #00bdff, #0099ff, #006dff, #122eeb);
 }
 
 .terminal {
@@ -56,6 +56,11 @@ body {
             &__minimize {
                 background-color: rgb(121, 255, 94);
             }
+        }
+
+        &__title {
+            pointer-events: none;
+            user-select: none;
         }
     }
 

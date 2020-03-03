@@ -54,46 +54,100 @@ const commands = [
     }
 ]
 
+let history = []
+let historyNavigation = history.length;
+
 let terminal = document.querySelector('#terminal')
 let output = document.querySelector('#body');
 let outputCopy = output.cloneNode(true)
 let count = 0;
 
 function listener(e) {
-    if (e.key === 'Enter'){
+    if (e.key === 'Enter' && e.target.value){
         let commandChain = e.target.value.split(' ');
         commandChain.map((commandText) => {
-            if (commandText == 'clear') {
-                window.location.reload(false)
-                return
-            }
-            
-            let commandOutput = commands.find((command) => command.command == commandText.toLowerCase())
-            if (commandOutput) 
-                output.appendChild(commandOutput.output())
+            if (commandText == 'clear') 
+                output.innerHTML = ''
             else {
-                let node = document.createElement('p')
-                node.appendChild(document.createTextNode('Command not found. Try help'))
-                output.appendChild(node)
+                let commandOutput = commands.find((command) => command.command == commandText.toLowerCase())
+                if (commandOutput) 
+                    output.appendChild(commandOutput.output())
+                else {
+                    let node = document.createElement('p')
+                    node.appendChild(document.createTextNode('Command not found. Try help'))
+                    output.appendChild(node)
+                }
             }
         })
         moveToBottom(e)
+        history.push(e.target.value)
+        historyNavigation = history.length
+    }
+}
+
+function getHistory(e) {
+    let input = document.querySelector(`#input${count}`).querySelector('input')
+    
+    if (e.keyCode == 38) {
+        if (historyNavigation > 0 ) 
+            input.value = history[--historyNavigation]
+    }
+    else if (e.keyCode == 40) {
+        if (historyNavigation < history.length-1 ) 
+            input.value = history[++historyNavigation]
     }
 }
 
 function moveToBottom(e) {
-    let copy = document.querySelector(`#input${count}`).cloneNode(true)
-    e.target.disabled = true
+    let copy = document.querySelector(`#input${count}`)
 
-    copy.id = `input${++count}`
-    copy.querySelector('input').value = ''
-    copy.addEventListener('keypress', listener)
-    output.appendChild(copy)
-    copy.querySelector('input').focus()
+    if (copy) {
+        copy = copy.cloneNode(true)
+        e.target.disabled = true
+    
+        copy.id = `input${++count}`
+        copy.querySelector('input').value = ''
+        copy.querySelector('input').addEventListener('keypress', listener)
+        copy.querySelector('input').addEventListener('keydown', getHistory)
+        output.appendChild(copy)
+        copy.querySelector('input').focus()
+        copy.querySelector('input').autocomplete = 'off'
+    }
+    else {
+        copy = document.createElement('div')
+        let p = document.createElement('p')
+        let span = document.createElement('span')
+        let input = document.createElement('input')
+
+        span.className = "terminal__body__input--highlight"
+        span.appendChild(document.createTextNode('guest'))
+
+        p.appendChild(document.createTextNode('guest@vsalfafara.github.io:~ '))
+        p.appendChild(span)
+        p.appendChild(document.createTextNode('$'))
+
+        input.type = 'text'
+        input.id = 'input'
+        input.spellcheck = false
+        input.autocomplete = 'off'
+
+        copy.className = 'terminal__body__input'
+        copy.id = 'input0'
+        copy.appendChild(p)
+        copy.appendChild(input)
+
+        output.appendChild(copy)
+        input.focus()
+        input.addEventListener('keypress', listener)
+        input.addEventListener('keydown', getHistory)
+        count = 0
+    }
 }
 
 function init() {
-    document.querySelector('input').addEventListener('keypress', listener)
+    let input = document.querySelector('input')
+    input.addEventListener('keypress', listener)
+    input.addEventListener('keydown', getHistory)
 }
 
 init()
